@@ -18,23 +18,43 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Find Project Root
+      id: find_root
+      run: |
+        GRADLEW_PATH=$(find . -name gradlew | head -1)
+        PROJECT_ROOT=$(dirname "$GRADLEW_PATH")
+        echo "project_root=$PROJECT_ROOT" >> $GITHUB_ENV
+        echo "Found gradlew at $GRADLEW_PATH, setting project_root to $PROJECT_ROOT"
+
     - name: Decode debug keystore
       run: base64 -d debug.keystore.base64 > debug.keystore || true
+      working-directory: ${{ env.project_root }}
 
     - name: Debug Information
       run: |
         pwd
         ls -la
+        ls -la .github || true
+        ls -la gradle || true
         find . -name gradlew
 
     - name: Grant execute permission for gradlew
-      run: chmod +x ./gradlew
+      run: chmod +x "$(find . -name gradlew | head -1)"
       
     - name: Build with Gradle
-      run: ./gradlew assembleDebug --stacktrace
+      run: |
+        GRADLEW_PATH=$(find . -name gradlew | head -1)
+        cd "$(dirname "$GRADLEW_PATH")"
+        ./gradlew assembleDebug --stacktrace
       
+    - name: Find Project Root for APK Upload
+      run: |
+        GRADLEW_PATH=$(find . -name gradlew | head -1)
+        PROJECT_ROOT=$(dirname "$GRADLEW_PATH")
+        echo "project_root=$PROJECT_ROOT" >> $GITHUB_ENV
+
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: ${{ env.project_root }}/app/build/outputs/apk/debug/app-debug.apk
