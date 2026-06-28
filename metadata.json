@@ -1,0 +1,6 @@
+{
+  "name": "Singh Milk Dairy",
+  "description": "Premium Corporate Dairy Management Application for Singh Milk Dairy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

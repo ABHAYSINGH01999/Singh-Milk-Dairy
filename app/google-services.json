@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "78024425455",
+    "project_id": "singh-milk-dairy",
+    "storage_bucket": "singh-milk-dairy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78024425455:android:b282a0bf6cd4c0766d001a",
+        "android_client_info": {
+          "package_name": "com.aistudio.singhdairy.jmxq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78024425455-pieq2j3q5fhqrvjoliv3r93ur8p35j4f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aistudio.singhdairy.jmxq",
+            "certificate_hash": "7509120da0a92b4d4af228a8c924b1cf5bcdaf7e"
+          }
+        },
+        {
+          "client_id": "78024425455-8qi9ds3vbs9qrhtclleupgqqbtk0un1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWrSVHcRUBVCvlQ0GFPXt_rOgLhB8jBgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78024425455-8qi9ds3vbs9qrhtclleupgqqbtk0un1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
