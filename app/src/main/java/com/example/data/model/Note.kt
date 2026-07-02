@@ -12,7 +12,10 @@ data class Note(
     val reminderDateMillis: Long? = null,
     val priority: NotePriority = NotePriority.MEDIUM,
     val createdAtMillis: Long = System.currentTimeMillis(),
-    val lastUpdatedMillis: Long = System.currentTimeMillis()
+    val lastUpdatedMillis: Long = System.currentTimeMillis(),
+    val isDeleted: Boolean = false,
+    val deletedAt: Long? = null,
+    val deletedBy: String? = null
 )
 
 enum class NotePriority {

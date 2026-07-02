@@ -54,7 +54,7 @@ class DairyRepository(
     }
     
     suspend fun deleteCustomer(id: Int) {
-        customerDao.deleteCustomer(id)
+        customerDao.softDeleteCustomer(id)
         scheduleSync()
     }
     
@@ -66,7 +66,7 @@ class DairyRepository(
     }
     
     suspend fun deleteDeliveryEntry(entry: DeliveryEntry) {
-        deliveryEntryDao.deleteDeliveryEntry(entry)
+        deliveryEntryDao.softDeleteDeliveryEntry(entry.id)
         scheduleSync()
     }
 
@@ -83,7 +83,7 @@ class DairyRepository(
     }
 
     suspend fun deleteTransaction(transaction: TransactionEntry) {
-        transactionDao.deleteTransaction(transaction)
+        transactionDao.softDeleteTransaction(transaction.id)
         scheduleSync()
     }
 
@@ -100,6 +100,61 @@ class DairyRepository(
     }
 
     suspend fun deleteNote(note: Note) {
+        noteDao.softDeleteNote(note.id)
+        scheduleSync()
+    }
+
+    // Recycle Bin Operations
+    fun getDeletedCustomers(): Flow<List<Customer>> = customerDao.getDeletedCustomers()
+    fun getDeletedDeliveryEntries(): Flow<List<DeliveryEntry>> = deliveryEntryDao.getDeletedDeliveryEntries()
+    fun getDeletedTransactions(): Flow<List<TransactionEntry>> = transactionDao.getDeletedTransactions()
+    fun getDeletedNotes(): Flow<List<Note>> = noteDao.getDeletedNotes()
+
+    suspend fun emptyRecycleBin() {
+        customerDao.emptyRecycleBin()
+        deliveryEntryDao.emptyRecycleBin()
+        transactionDao.emptyRecycleBin()
+        noteDao.emptyRecycleBin()
+        dailyDeliveryDao.emptyRecycleBin()
+        scheduleSync()
+    }
+
+    suspend fun restoreCustomer(customer: Customer) {
+        customerDao.insertCustomer(customer.copy(isDeleted = false, deletedAt = null, deletedBy = null))
+        scheduleSync()
+    }
+
+    suspend fun restoreDeliveryEntry(entry: DeliveryEntry) {
+        deliveryEntryDao.insertDeliveryEntry(entry.copy(isDeleted = false, deletedAt = null, deletedBy = null))
+        scheduleSync()
+    }
+
+    suspend fun restoreTransaction(transaction: TransactionEntry) {
+        transactionDao.insertTransaction(transaction.copy(isDeleted = false, deletedAt = null, deletedBy = null))
+        scheduleSync()
+    }
+
+    suspend fun restoreNote(note: Note) {
+        noteDao.insertNote(note.copy(isDeleted = false, deletedAt = null, deletedBy = null))
+        scheduleSync()
+    }
+
+    suspend fun permanentlyDeleteCustomer(id: Int) {
+        customerDao.deleteCustomer(id)
+        scheduleSync()
+    }
+
+    suspend fun permanentlyDeleteDeliveryEntry(entry: DeliveryEntry) {
+        deliveryEntryDao.deleteDeliveryEntry(entry)
+        scheduleSync()
+    }
+
+    suspend fun permanentlyDeleteTransaction(transaction: TransactionEntry) {
+        transactionDao.deleteTransaction(transaction)
+        scheduleSync()
+    }
+
+    suspend fun permanentlyDeleteNote(note: Note) {
         noteDao.deleteNote(note)
         scheduleSync()
     }

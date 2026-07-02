@@ -15,7 +15,10 @@ data class DeliveryEntry(
     val eveningQuantity: Double,
     val rate: Double,
     val reason: String? = null,
-    val autoResume: Boolean = true
+    val autoResume: Boolean = true,
+    val isDeleted: Boolean = false,
+    val deletedAt: Long? = null,
+    val deletedBy: String? = null
 )
 
 enum class EntryType {

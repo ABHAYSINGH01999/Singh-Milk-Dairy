@@ -12,7 +12,7 @@ import com.example.data.model.TransactionEntry
 import com.example.data.model.Note
 import com.example.data.dao.NoteDao
 
-@Database(entities = [Customer::class, DeliveryEntry::class, DailyDeliveryStatus::class, TransactionEntry::class, Note::class], version = 9, exportSchema = false)
+@Database(entities = [Customer::class, DeliveryEntry::class, DailyDeliveryStatus::class, TransactionEntry::class, Note::class], version = 10, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun customerDao(): CustomerDao
     abstract fun deliveryEntryDao(): com.example.data.dao.DeliveryEntryDao

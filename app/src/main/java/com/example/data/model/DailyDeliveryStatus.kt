@@ -9,5 +9,8 @@ data class DailyDeliveryStatus(
     val customerId: Int,
     val dateString: String,
     val session: String, // "MORNING" or "EVENING"
-    val status: String   // "PENDING", "DELIVERED", "SHIFTED"
+    val status: String,   // "PENDING", "DELIVERED", "SHIFTED"
+    val isDeleted: Boolean = false,
+    val deletedAt: Long? = null,
+    val deletedBy: String? = null
 )

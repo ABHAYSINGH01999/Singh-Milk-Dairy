@@ -98,13 +98,25 @@ class AppDataContainer(private val application: Application) : AppContainer {
         }
     }
 
+    private val MIGRATION_9_10 = object : androidx.room.migration.Migration(9, 10) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            // Add soft delete fields to all tables
+            val tables = listOf("customers", "delivery_entries", "daily_deliveries", "transactions", "notes")
+            for (table in tables) {
+                db.execSQL("ALTER TABLE `$table` ADD COLUMN `isDeleted` INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE `$table` ADD COLUMN `deletedAt` INTEGER")
+                db.execSQL("ALTER TABLE `$table` ADD COLUMN `deletedBy` TEXT")
+            }
+        }
+    }
+
     private val database: AppDatabase by lazy {
         Room.databaseBuilder(
             application,
             AppDatabase::class.java,
             "dairy_database"
         )
-        .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
+        .addMigrations(MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
         .fallbackToDestructiveMigration()
         .build()
     }

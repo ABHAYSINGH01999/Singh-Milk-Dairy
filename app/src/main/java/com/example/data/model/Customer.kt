@@ -20,7 +20,10 @@ data class Customer(
     val advanceBalance: Double = 0.0,
     val outstandingBalance: Double = 0.0,
     val cycleStartDay: Int = 1,
-    val cycleEndDay: Int = 31
+    val cycleEndDay: Int = 31,
+    val isDeleted: Boolean = false,
+    val deletedAt: Long? = null,
+    val deletedBy: String? = null
 )
 
 enum class CustomerStatus {

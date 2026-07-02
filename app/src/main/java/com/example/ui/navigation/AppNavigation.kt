@@ -79,7 +79,23 @@ fun MainAppScreen(appContainer: AppContainer) {
             composable("settings") {
                 com.example.ui.settings.SettingsScreen(
                     authManager = appContainer.authManager,
-                    syncManager = appContainer.syncManager
+                    syncManager = appContainer.syncManager,
+                    onNavigateToAbout = { navController.navigate("about") },
+                    onNavigateToRecycleBin = { navController.navigate("recycle_bin") }
+                )
+            }
+            composable("about") {
+                com.example.ui.settings.AboutScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable("recycle_bin") {
+                val viewModel: com.example.ui.settings.RecycleBinViewModel = viewModel(
+                    factory = com.example.ui.settings.RecycleBinViewModel.provideFactory(appContainer.dairyRepository)
+                )
+                com.example.ui.settings.RecycleBinScreen(
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
             composable("add_customer") {

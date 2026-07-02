@@ -11,7 +11,10 @@ data class TransactionEntry(
     val dateMillis: Long,
     val type: TransactionType, // PAYMENT or ADVANCE
     val paymentMode: PaymentMode? = null,
-    val notes: String? = null
+    val notes: String? = null,
+    val isDeleted: Boolean = false,
+    val deletedAt: Long? = null,
+    val deletedBy: String? = null
 )
 
 enum class PaymentMode {
